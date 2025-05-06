@@ -269,9 +269,7 @@ class FeederBowl(SurePetcareSensor):
 
         # todo: index parameter is not available in the bowl_data anymore
         # for now we use a random number...
-        self.bowl_id = random.randint(
-            1, 10
-        )  # int(bowl_data.get("index", random.randint(1, 10)))
+        self.bowl_id = 0
 
         self._id = int(f"{_id}{str(self.bowl_id)}")
         self._spc: SurePetcareAPI = spc
