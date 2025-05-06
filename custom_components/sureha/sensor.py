@@ -68,6 +68,11 @@ async def async_setup_entry(
 
     for surepy_entity in spc.coordinator.data.values():
 
+        _LOGGER.debug(
+            "surepy_entity: %s",
+            pprint.pformat(surepy_entity.raw_data()),
+        )
+
         if surepy_entity.type in [
             EntityType.CAT_FLAP,
             EntityType.PET_FLAP,
