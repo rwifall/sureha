@@ -106,7 +106,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     async def async_update_data():
         _LOGGER.debug("async_update_data")
-        
+
         try:
             # asyncio.TimeoutError and aiohttp.ClientError already handled
 
@@ -184,6 +184,9 @@ class SurePetcareAPI:
         await self.hass.config_entries.async_forward_entry_setups(self.config_entry, PLATFORMS)
 
         surepy_entities: list[SurepyEntity] = self.coordinator.data.values()
+
+        for myentity in surepy_entities:
+            _LOGGER.debug("entity: %s %s %s", myentity.name, myentity, myentity.raw_data())
 
         pet_ids = [
             entity.id for entity in surepy_entities if entity.type == EntityType.PET
