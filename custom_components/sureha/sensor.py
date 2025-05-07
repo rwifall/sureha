@@ -100,6 +100,8 @@ async def async_setup_entry(
             )
 
             for bowl in bowls.get("settings", []):
+                _LOGGER.debug("bowl: %s", pprint.pformat(bowl))
+                _LOGGER.debug("surepy_entity.id: %s", surepy_entity.id)
                 entities.append(
                     FeederBowl(spc.coordinator, surepy_entity.id, spc, bowl)
                     # FeederBowl(spc.coordinator, surepy_entity.id, spc, bowl.raw_data())
@@ -268,7 +270,7 @@ class FeederBowl(SurePetcareSensor):
         """Initialize a Bowl sensor."""
         super().__init__(coordinator, _id, spc)
 
-        _LOGGER.debug("bowl_data: %s", pprint.pformat(bowl_data))
+        _LOGGER.debug("FeederBowl:bowl_data: %s", pprint.pformat(bowl_data))
 
         self.feeder_id = _id
 
@@ -277,6 +279,8 @@ class FeederBowl(SurePetcareSensor):
         self.bowl_id = 0
 
         self._id = int(f"{_id}{str(self.bowl_id)}")
+        _LOGGER.debug("self._id: %s", self._id)
+
         self._spc: SurePetcareAPI = spc
 
         self._surepy_feeder_entity: SurepyEntity = self._coordinator.data[_id]
@@ -298,6 +302,7 @@ class FeederBowl(SurePetcareSensor):
         self._attr_unique_id = (
             f"{self._surepy_feeder_entity.household_id}-{self.feeder_id}-{self.bowl_id}"
         )
+        _LOGGER.debug("self._attr_unique_id: %s", self._attr_unique_id)
         self._attr_unit_of_measurement = UnitOfMass.GRAMS
 
     @property
