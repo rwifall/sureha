@@ -19,6 +19,8 @@ from surepy.enums import EntityType, Location
 from . import SurePetcareAPI
 from .const import DOMAIN, SPC, SURE_MANUFACTURER
 
+_LOGGER = logging.getLogger(__name__)
+
 PARALLEL_UPDATES = 2
 
 
