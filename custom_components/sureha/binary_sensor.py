@@ -225,6 +225,7 @@ class DeviceConnectivity(SurePetcareBinarySensor):
 
     def __init__(self, coordinator, _id: int, spc: SurePetcareAPI) -> None:
         """Initialize a Sure Petcare device connectivity sensor."""
+        _LOGGER.debug("DeviceConnectivity: __init__")
 
         super().__init__(coordinator, _id, spc, BinarySensorDeviceClass.CONNECTIVITY)
 
@@ -232,6 +233,7 @@ class DeviceConnectivity(SurePetcareBinarySensor):
         self._attr_unique_id = (
             f"{self._surepy_entity.household_id}-{self._id}-connectivity"
         )
+        _LOGGER.debug("_attr_unique_id: %s", self._attr_unique_id)
 
     @property
     def extra_state_attributes(self) -> dict[str, Any]:

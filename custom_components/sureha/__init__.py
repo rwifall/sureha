@@ -69,6 +69,7 @@ CATS = [
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up."""
 
+    _LOGGER.debug("async_setup_entry")
     hass.data.setdefault(DOMAIN, {})
 
     # set option defaults
@@ -104,7 +105,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     spc = SurePetcareAPI(hass, entry, surepy)
 
     async def async_update_data():
-
+        _LOGGER.debug("async_update_data")
+        
         try:
             # asyncio.TimeoutError and aiohttp.ClientError already handled
 

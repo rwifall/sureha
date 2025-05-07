@@ -61,6 +61,7 @@ async def async_setup_entry(
     hass: HomeAssistant, config_entry: ConfigEntry, async_add_entities: Any
 ) -> None:
     """Set up config entry Sure PetCare Flaps sensors."""
+    _LOGGER.debug("async_setup_entry")  
 
     entities: list[Flap | Felaqua | Feeder | FeederBowl | Battery] = []
 
