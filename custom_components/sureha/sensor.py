@@ -67,6 +67,7 @@ async def async_setup_entry(
 
     spc: SurePetcareAPI = hass.data[DOMAIN][SPC]
 
+    _LOGGER.debug("Num enties: %d", len(spc.coordinator.data))
     for surepy_entity in spc.coordinator.data.values():
 
         _LOGGER.debug(
