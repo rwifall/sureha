@@ -101,7 +101,7 @@ async def async_setup_entry(
                 pprint.pformat(bowls),
             )
 
-            for bowl in bowls.get("settings", []):
+            for bowl in bowls:
                 _LOGGER.debug("bowl: %s", pprint.pformat(bowl))
                 _LOGGER.debug("surepy_entity.id: %s", surepy_entity.id)
                 entities.append(
@@ -278,7 +278,7 @@ class FeederBowl(SurePetcareSensor):
 
         # todo: index parameter is not available in the bowl_data anymore
         # for now we use a random number...
-        self.bowl_id = 0
+        self.bowl_id = bowl_data["index"]
 
         self._id = int(f"{_id}{str(self.bowl_id)}")
         _LOGGER.debug("self._id: %s", self._id)
