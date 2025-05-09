@@ -323,7 +323,9 @@ class FeederBowl(SurePetcareSensor):
             and hasattr(feeder.bowls[self.bowl_id], "weight")
             and (weight := feeder.bowls[self.bowl_id].weight)
         ):
-            return int(weight) if weight and weight > 0 else None
+            if weight is None:
+                return None
+            return int(weight) if weight > 0 else 0
 
 
 class Feeder(SurePetcareSensor):
