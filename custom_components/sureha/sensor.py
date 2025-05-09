@@ -293,6 +293,7 @@ class FeederBowl(SurePetcareSensor):
         self._attr_name = (
             f"{EntityType.FEEDER.name.replace('_', ' ').title()} "
             f"{self._surepy_entity.name.capitalize()}"
+            f" Bowl {self.bowl_id}"
         )
 
         self._attr_icon = "mdi:bowl"
