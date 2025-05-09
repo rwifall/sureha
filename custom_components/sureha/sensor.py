@@ -276,9 +276,8 @@ class FeederBowl(SurePetcareSensor):
 
         self.feeder_id = _id
 
-        # todo: index parameter is not available in the bowl_data anymore
-        # for now we use a random number...
-        self.bowl_id = bowl_data["index"]
+        # Get the bowl index from the bowl data
+        self.bowl_id = bowl_data.index
 
         self._id = int(f"{_id}{str(self.bowl_id)}")
         _LOGGER.debug("self._id: %s", self._id)
@@ -320,6 +319,7 @@ class FeederBowl(SurePetcareSensor):
         if (
             (feeder := cast(SureFeeder, self._coordinator.data[self.feeder_id]))
             and len(feeder.bowls) > 0
+            and self.bowl_id in feeder.bowls
             and hasattr(feeder.bowls[self.bowl_id], "weight")
             and (weight := feeder.bowls[self.bowl_id].weight)
         ):
