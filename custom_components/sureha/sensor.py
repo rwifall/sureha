@@ -279,9 +279,6 @@ class FeederBowl(SurePetcareSensor):
         # Get the bowl index from the bowl data
         self.bowl_id = bowl_data.index
 
-        #        self._id = int(f"{_id}{str(self.bowl_id)}")
-        #        _LOGGER.debug("self._id: %s", self._id)
-
         self._spc: SurePetcareAPI = spc
 
         self._surepy_feeder_entity: SurepyEntity = self._coordinator.data[_id]
@@ -327,6 +324,30 @@ class FeederBowl(SurePetcareSensor):
             if weight is None:
                 return None
             return int(weight) if weight > 0 else 0
+
+    @property
+    def extra_state_attributes(self) -> dict[str, Any]:
+        """Return the additional attrs."""
+
+        attrs = {}
+
+        if (
+            (feeder := cast(SureFeeder, self._coordinator.data[self.feeder_id]))
+            and len(feeder.bowls) > 0
+            and self.bowl_id in feeder.bowls
+
+        ):
+            target_weight := feeder.bowls[self.bowl_id].target_weight) if ( hasattr(feeder.bowls[self.bowl_id], "target_weight")
+            change := feeder.bowls[self.bowl_id].change if ( hasattr(feeder.bowls[self.bowl_id], "change")
+
+
+            attrs = {
+                "target_weight": target_weight,
+                "change": change,
+            }
+
+        return attrs
+
 
 
 class Feeder(SurePetcareSensor):
