@@ -303,6 +303,7 @@ class FeederBowl(SurePetcareSensor):
         )
         _LOGGER.debug("self._attr_unique_id: %s", self._attr_unique_id)
         self._attr_unit_of_measurement = UnitOfMass.GRAMS
+        self._attr_device_class = SensorDeviceClass.WEIGHT
 
     @property
     def state(self) -> float | None:
@@ -354,6 +355,7 @@ class Feeder(SurePetcareSensor):
         self._surepy_entity: SureFeeder
 
         self._attr_entity_picture = self._surepy_entity.icon
+        self._attr_device_class = SensorDeviceClass.WEIGHT
         self._attr_unit_of_measurement = UnitOfMass.GRAMS
 
     @property
