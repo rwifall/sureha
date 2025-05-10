@@ -335,19 +335,14 @@ class FeederBowl(SurePetcareSensor):
             (feeder := cast(SureFeeder, self._coordinator.data[self.feeder_id]))
             and len(feeder.bowls) > 0
             and self.bowl_id in feeder.bowls
-
         ):
-            target_weight := feeder.bowls[self.bowl_id].target_weight) if ( hasattr(feeder.bowls[self.bowl_id], "target_weight")
-            change := feeder.bowls[self.bowl_id].change if ( hasattr(feeder.bowls[self.bowl_id], "change")
-
-
-            attrs = {
-                "target_weight": target_weight,
-                "change": change,
-            }
+            if hasattr(feeder.bowls[self.bowl_id], "target_weight"):
+                attrs["target_weight"] = feeder.bowls[self.bowl_id].target_weight
+            
+            if hasattr(feeder.bowls[self.bowl_id], "change"):
+                attrs["change"] = feeder.bowls[self.bowl_id].change
 
         return attrs
-
 
 
 class Feeder(SurePetcareSensor):
