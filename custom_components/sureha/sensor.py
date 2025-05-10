@@ -322,8 +322,6 @@ class FeederBowl(SurePetcareSensor):
             and hasattr(feeder.bowls[self.bowl_id], "weight")
             and (weight := feeder.bowls[self.bowl_id].weight)
         ):
-            if weight is None:
-                return None
             return int(weight) if weight > 0 else 0
 
     @property
@@ -362,7 +360,7 @@ class Feeder(SurePetcareSensor):
     def state(self) -> float | None:
         """Return the total remaining food."""
         if feeder := cast(SureFeeder, self._coordinator.data[self._id]):
-            return int(feeder.total_weight) if feeder.total_weight else None
+            return int(feeder.total_weight) if feeder.total_weight > 0 else 0
 
 
 class Battery(SurePetcareSensor):
