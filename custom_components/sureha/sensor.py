@@ -279,8 +279,8 @@ class FeederBowl(SurePetcareSensor):
         # Get the bowl index from the bowl data
         self.bowl_id = bowl_data.index
 
-        self._id = int(f"{_id}{str(self.bowl_id)}")
-        _LOGGER.debug("self._id: %s", self._id)
+        #        self._id = int(f"{_id}{str(self.bowl_id)}")
+        #        _LOGGER.debug("self._id: %s", self._id)
 
         self._spc: SurePetcareAPI = spc
 
