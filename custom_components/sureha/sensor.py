@@ -303,6 +303,7 @@ class FeederBowl(SurePetcareSensor):
         )
         _LOGGER.debug("self._attr_unique_id: %s", self._attr_unique_id)
         self._attr_unit_of_measurement = UnitOfMass.GRAMS
+        self._attr_device_class = SensorDeviceClass.WEIGHT
 
     @property
     def state(self) -> float | None:
@@ -321,8 +322,6 @@ class FeederBowl(SurePetcareSensor):
             and hasattr(feeder.bowls[self.bowl_id], "weight")
             and (weight := feeder.bowls[self.bowl_id].weight)
         ):
-            if weight is None:
-                return None
             return int(weight) if weight > 0 else 0
 
     @property
@@ -354,13 +353,14 @@ class Feeder(SurePetcareSensor):
         self._surepy_entity: SureFeeder
 
         self._attr_entity_picture = self._surepy_entity.icon
+        self._attr_device_class = SensorDeviceClass.WEIGHT
         self._attr_unit_of_measurement = UnitOfMass.GRAMS
 
     @property
     def state(self) -> float | None:
         """Return the total remaining food."""
         if feeder := cast(SureFeeder, self._coordinator.data[self._id]):
-            return int(feeder.total_weight) if feeder.total_weight else None
+            return int(feeder.total_weight) if feeder.total_weight > 0 else 0
 
 
 class Battery(SurePetcareSensor):
